@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block%}
+
+    <h1>Cancer Trails Home Page</h1>
+    
+    <div class="jumbotron">
+        <form action="{% url 'trials:index' %}" method="post" id="searchForm" data-cancerTypes-url="{% url 'trials:ajax_load_cancer_type' %}" novalidate>
+            {% csrf_token %}
+            {{ search_form.as_p}}
+            <input type="submit" name="" value="Search"> 
+    
+        </form>
+    </div>   
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_body_region").change(function () {
+      var url = $("#searchForm").attr("data-cancerTypes-url");  // get the url of the `load_cancer_types` view
+      var body_regionId = $(this).val();  // get the selected body_region ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'body_region': body_regionId       // add the body_region id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cancer_types` view function
+          $("#id_cancer_type").html(data);  // replace the contents of the cancer input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+    {% endblock %}

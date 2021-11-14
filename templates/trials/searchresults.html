@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block%}      
+            
+       
+        {% for trialName in trials %}            
+            <li><a href= "{% url 'trials:trialName' trialName=trialName %}">{{ trialName }}</a> </li>
+        {% empty %}
+            <h2>No Trials meet that criteria</h2>
+        {% endfor %}
+        
+
+    {% endblock %}

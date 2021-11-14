@@ -1,0 +1,42 @@
+Breast,Invasive breast cancer
+Breast,HER2 negative breast cancer
+Breast,Triple negative breast cancer
+Breast,Ductal adenocarcinoma
+Breast,ER positive breast cancer
+Breast,HER2 positive breast cancer
+Lung,Non-small cell lung cancer
+Lung,Mesothelioma
+GI,Colorectal cancer
+GI,Gastro-oesophageal cancer
+GI,Squamous cell carcinoma of the anus
+Thyroid ,Papillary thyroid cancer
+Thyroid ,Follicular thyroid cancer
+Thyroid ,Medullary thyroid cancer
+Thyroid ,Anaplastic thyroid cancer
+Pancreas,Pancreatic adenocarcinoma
+Haematology,Acute lymphocytic lukaemia
+Haematology,Chronic lymphoblastic lukaemia
+Haematology,Acute myeloblastic lukaemia
+Haematology,Chronic myeloid lukaemia
+Haematology,Hodgkins lymphoma
+Haematology,Non-Hodgkins lymphoma
+Haematology,Follicular lymphoma
+Haematology,Diffuse large B-cell lymphoma
+Haematology,MALT lymphoma
+Haematology,Marginal zone lymphoma
+Haematology,Multiple myeloma
+Female reproductive system,Endometriod ovarian cancer
+Female reproductive system,Fallopian tube cancer
+Female reproductive system,Endometrial carcinoma
+Female reproductive system,Uterine cancer
+Female reproductive system,Cervical carcinoma
+Female reproductive system,Primary peritoneal cancer
+Prostate,Metastatic Castrate Sensitive Prostate Cancer
+Prostate,Malignant neoplasm of prostate
+Skin,Melanoma
+Skin,Squamos cell carcinoma
+Skin,Basal cell carcinoma
+Skin,Actinic keratosis
+Bladder,Muscle invasive bladder cancer
+,Non-muscle invasive cancer
+,Urothelial carcinoma
