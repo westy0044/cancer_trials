@@ -14,6 +14,7 @@ def index(request):
     # check if they have submitted a search
     if request.method == "POST":
         search_form = searchForm(data=request.POST)
+        print(search_form)        
         if search_form.is_valid():
             # need to check for matches in the database         
             # need to add end date after todays date to filter
@@ -146,7 +147,3 @@ def get_trial(request,trialName):
                 "trial_form":trial_form,       
             })
 
-def load_cancer_type(request):
-    body_region_id = request.GET.get('body_region')
-    cancer_type = cancerTypes.objects.filter(body_region_id=body_region_id).order_by('cancer_type')
-    return render(request, 'trials/cancer_dropdown_list_options.html', {'cancer_type': cancer_type})

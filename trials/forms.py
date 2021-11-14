@@ -32,12 +32,7 @@ class selectedTrialForm(forms.ModelForm):
 class searchForm(forms.ModelForm):
 
     class Meta():
-        # model = trial
-        model = cancerTypes
+        model = trial       
         fields = ('body_region', 'cancer_type')
-    # overriding the default init method, and setting the queryset of the cancer_type field 
-    # to an empty list of cancer types
-    # https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['cancer_type'].queryset = cancerTypes.objects.none()
+   
+        
