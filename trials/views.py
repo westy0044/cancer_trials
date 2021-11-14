@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm
+from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1
 from trials.models import cancerTypes, trial
 from django.db.models import Q
 
@@ -12,9 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     # check if they have submitted a search
-    if request.method == "POST":
-        search_form = searchForm(data=request.POST)
-        print(search_form)        
+    if request.method == "POST":        
+        search_form = searchForm(data=request.POST)                
         if search_form.is_valid():
             # need to check for matches in the database         
             # need to add end date after todays date to filter
@@ -28,8 +27,12 @@ def index(request):
         else:
             #if form not valid print out errors to terminal update for prod app
             print(search_form.errors)
+            return render(request,"trials/error.html",{
+            "msg": "form not valid"
+            }) 
+            
     else:
-        search_form = searchForm()
+        search_form = searchForm1()
         return render(request,'trials/index.html',
                                 {'search_form':search_form
                                 })
@@ -147,3 +150,7 @@ def get_trial(request,trialName):
                 "trial_form":trial_form,       
             })
 
+def load_cancer_type(request):
+    body_region = request.GET.get('body_region')
+    cancer_type = cancerTypes.objects.filter(body_region=body_region).order_by('cancer_type') 
+    return render(request, 'trials/cancer_dropdown_list_options.html', {'cancer_type': cancer_type})

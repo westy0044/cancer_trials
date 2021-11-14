@@ -10,5 +10,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('addTrial/', views.addtrial, name='addtrial'),    
     path('logout/', views.user_logout, name='logout'),
-    # path('ajax/load_cancers/', views.load_cancer_type, name='ajax_load_cancer_type'),        
+    path('ajax/load_cancers/', views.load_cancer_type, name='ajax_load_cancer_type'),        
 ]
