@@ -10,19 +10,18 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-def index(request):
+def index(request):    
     # check if they have submitted a search
-    if request.method == "POST":        
-        search_form = searchForm(data=request.POST)                
+    if request.method == "POST":       
+        search_form = searchForm(data=request.POST)               
         if search_form.is_valid():
             # need to check for matches in the database         
             # need to add end date after todays date to filter
-            trials = trial.objects.filter(
+            returned_trials = trial.objects.filter(
                 Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
-                Q(cancer_type__exact=search_form.cleaned_data["cancer_type"]))
-                       
+                Q(cancer_type__exact=search_form.cleaned_data["cancer_type"])).values()                      
             return render(request,'trials/searchresults.html',
-                                {'trials':trials
+                                {'trials':returned_trials
                                 })
         else:
             #if form not valid print out errors to terminal update for prod app
@@ -32,6 +31,7 @@ def index(request):
             }) 
             
     else:
+        # view for dependent cancer typ drop down box only
         search_form = searchForm1()
         return render(request,'trials/index.html',
                                 {'search_form':search_form
@@ -113,14 +113,14 @@ def user_login(request):
     else:
         return render(request, 'trials/login.html')
 
-def get_trial(request,trialName):
+def get_trial(request,ID):
     '''
         Get page for selected trial
         1. get full trial deails        2. 
         3. if content not found, redirect to error page
-    '''
+    '''    
     try:
-        trialSelected = trial.objects.get(name=trialName)
+        trialSelected = trial.objects.get(id=ID)
     except:
         return redirect('index') 
     
