@@ -38,7 +38,8 @@ class trial(models.Model):
     exclusion_criteria = models.TextField()
     body_region = models.ForeignKey(bodyRegion, on_delete=models.CASCADE)
     cancer_type = models.ForeignKey(cancerTypes, on_delete=models.CASCADE)
-    trial_lead = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    trial_lead = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    
+    Trial_ended = models.BooleanField(default=False)
 
     def __str__(self):
         return (f"{self.name}")

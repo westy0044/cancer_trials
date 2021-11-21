@@ -91,7 +91,7 @@ def register(request):
                             'registered': registered})
 
 def user_login(request):
-
+    # need to update so it doesn't errorif the wrong details are entered
     if request.method == 'POST':
         # username and password in bracket relates to 'names' username and password specified in login.html
         username = request.POST.get('username')
