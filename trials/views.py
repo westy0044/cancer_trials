@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1
+from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1, updateForm
 from trials.models import cancerTypes, trial
 from django.db.models import Q
 
@@ -113,14 +113,14 @@ def user_login(request):
     else:
         return render(request, 'trials/login.html')
 
-def get_trial(request,ID):
+def get_trial(request,id):
     '''
         Get page for selected trial
         1. get full trial deails        2. 
         3. if content not found, redirect to error page
     '''    
     try:
-        trialSelected = trial.objects.get(id=ID)
+        trialSelected = trial.objects.get(id=id)
     except:
         return redirect('index') 
     
@@ -144,13 +144,37 @@ def get_trial(request,ID):
             'cancer_type': trialSelected.cancer_type,
             'trial_lead': trialSelected.trial_lead
         }
-        trial_form = selectedTrialForm(initial=data)       
+        trial_form = selectedTrialForm(initial=data)
+        print("ID = {}", trialSelected.id)       
     
         return render(request,"trials/trialpage.html",{                
-                "trial_form":trial_form,       
+                "trial_form":trial_form,
+                "trialSelected":trialSelected       
             })
 
 def load_cancer_type(request):
     body_region = request.GET.get('body_region')
     cancer_type = cancerTypes.objects.filter(body_region=body_region).order_by('cancer_type') 
     return render(request, 'trials/cancer_dropdown_list_options.html', {'cancer_type': cancer_type})
+
+# need to be logged in to update trial
+@login_required
+def trial_update(request, id):    
+    if request.method == 'POST':
+        selected = trial.objects.get(id=id)
+        update_form = updateForm(request.POST, instance=selected)
+        if update_form.is_valid():            
+            update_form.save() 
+            # search form to create new index page when redirected.
+            search_form = searchForm1()          
+            return render(request,'trials/index.html',
+                                {'search_form':search_form,
+                                 "msg": "Trial Saved"
+                                })           
+        else:
+            return render(request,"trials/error.html",{
+            "msg": update_form.errors
+            })
+    else:
+        return redirect('index')
+

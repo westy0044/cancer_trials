@@ -4,7 +4,7 @@
             
        
         {% for trialName in trials %}            
-            <li><a href= "{% url 'trials:ID' ID=trialName.id %}">{{ trialName.name }}</a> </li>
+            <li><a href= "{% url 'trials:id' id=trialName.id %}">{{ trialName.name }}</a> </li>
         {% empty %}
             <h2>No Trials meet that criteria</h2>
         {% endfor %}

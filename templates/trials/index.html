@@ -3,6 +3,8 @@
     {% block body_block%}
 
     <h1>Cancer Trails Home Page</h1>
+
+    <h1>{{msg}}</h1>
     
     <div class="jumbotron">
         <form action="{% url 'trials:index' %}" method="post" id="searchForm" data-cancerTypes-url="{% url 'trials:ajax_load_cancer_type' %}" >

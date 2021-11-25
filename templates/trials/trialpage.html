@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 {% extends "trials/base.html" %}
 
-{% block body_block %}
-    <h1>Help Me</h1>
+{% block body_block %}    
 
     <div class="jumbotron">
         <!-- to do need to redirect to a view to save the update -->
-        <form action="{% url 'trials:index' %}" method="post">
+        <form action="{% url 'trials:update/id' id=trialSelected.id %}" id="updateForm" method="post">
             {% csrf_token %}
             {{ trial_form.as_p}}
             {% if user.is_authenticated %}
-                <input type="submit" name="" value="Update">                  
+                <input type="submit" name="" value="trial_update">                  
             {% endif %}
              
     

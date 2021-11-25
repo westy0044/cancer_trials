@@ -30,7 +30,7 @@ class cancerTypes(models.Model):
     def __str__(self):
         return (f"{self.body_region} {self.cancer_type}")
 
-class trial(models.Model):
+class trial(models.Model):    
     name = models.TextField()
     description = models.TextField()
     end_date = models.DateField(null=False)

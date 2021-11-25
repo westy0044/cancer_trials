@@ -23,6 +23,13 @@ class trialForm(forms.ModelForm):
         model = trial
         fields = '__all__'
 
+class updateForm(forms.ModelForm):
+
+    class Meta():
+        model = trial
+        fields = '__all__'
+
+
 class selectedTrialForm(forms.ModelForm):
     
     class Meta():
