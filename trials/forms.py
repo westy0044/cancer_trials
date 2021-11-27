@@ -40,13 +40,13 @@ class searchForm(forms.ModelForm):
 
     class Meta():
         model = trial       
-        fields = ('body_region', 'cancer_type')   
+        fields = ('body_region', 'cancer_type', 'Trial_ended')   
 
 class searchForm1(forms.ModelForm):
 
     class Meta():
         model = trial       
-        fields = ('body_region', 'cancer_type')
+        fields = ('body_region', 'cancer_type', 'Trial_ended')
     # overriding the default init method, and setting the queryset of the cancer_type field 
     # to an empty list of cancer types
     # https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html

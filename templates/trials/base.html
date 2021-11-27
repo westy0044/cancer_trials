@@ -11,15 +11,14 @@
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <ul class="nav navbar-nav">
-          <li><a class="navbar-brand" href="{% url 'trials:index' %}">Search Page</a></li>
-          <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'trials:register' %}">registration</a></li>
+          <li><a class="navbar-brand" href="{% url 'trials:index' %}">Search Page</a></li>           
 
           {% if user.is_authenticated %}
           <li><a class="navbar-link" href="{% url 'trials:addtrial' %}">Add New Trial</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:register' %}">Add New Trial Admin</a></li>
           <li><a class="navbar-link" href="{% url 'trials:logout' %}">Logout</a></li>
           {% else %}
-          <li><a class="navbar-link" href="{% url 'trials:user_login' %}">Login</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:user_login' %}">Trial Admins</a></li>
           {% endif %}
         </ul>
       </div>
@@ -32,7 +31,9 @@
     {# Anything outside of this will be inherited if you use extend.#}
     {% endblock %}
     </div>
-
-
+    <div class="alert alert-warning text-center">
+      <P>This is a proof of concept system.</P>
+      <P>No data held in this system relates to actual Cancer Trails </P>
+    </div>
   </body>
 </html>

@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
+import datetime
+
 # Create your views here.
 
 def index(request):    
@@ -15,12 +17,22 @@ def index(request):
     if request.method == "POST":       
         search_form = searchForm(data=request.POST)               
         if search_form.is_valid():
-            # need to check for matches in the database         
-            # need to add end date after todays date to filter
-            returned_trials = trial.objects.filter(
-                Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
-                Q(cancer_type__exact=search_form.cleaned_data["cancer_type"])).values()                      
-            return render(request,'trials/searchresults.html',
+            # need to check for matches in the database
+            if search_form.cleaned_data["Trial_ended"] == False:                
+                # todays date variable to only return trials that havent ended
+                now = datetime.datetime.now()
+                returned_trials = trial.objects.filter(
+                    Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
+                    Q(cancer_type__exact=search_form.cleaned_data["cancer_type"]) &
+                    Q(end_date__gt = now)).values()                      
+                return render(request,'trials/searchresults.html',
+                                {'trials':returned_trials
+                                })
+            else:
+                returned_trials = trial.objects.filter(
+                    Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
+                    Q(cancer_type__exact=search_form.cleaned_data["cancer_type"])).values()                      
+                return render(request,'trials/searchresults.html',
                                 {'trials':returned_trials
                                 })
         else:
@@ -42,7 +54,7 @@ def user_logout(request):
     logout(request)    
     return HttpResponseRedirect(reverse('trials:index'))
 
-#decorator so needs to be logged in
+#Create View - decorator so needs to be logged in
 @login_required
 def addtrial(request):
     # check if form is being requested or has been completed. 
@@ -108,11 +120,11 @@ def user_login(request):
                 return HttpResponse("Account not activer")
         else:
             print("Someone tried to login and failed")
-            print("Username: {} and password {}",format(username,password))
+            print(f"Username: {username} and password {password}")
             return HttpResponse("Invalid Logn Details")
     else:
         return render(request, 'trials/login.html')
-
+# Read View
 def get_trial(request,id):
     '''
         Get page for selected trial
@@ -157,11 +169,13 @@ def load_cancer_type(request):
     cancer_type = cancerTypes.objects.filter(body_region=body_region).order_by('cancer_type') 
     return render(request, 'trials/cancer_dropdown_list_options.html', {'cancer_type': cancer_type})
 
-# need to be logged in to update trial
+# Update View - decorator so needs to be logged in
 @login_required
 def trial_update(request, id):    
     if request.method == 'POST':
+        # need to get the trial to update rather than create
         selected = trial.objects.get(id=id)
+        # creates an the update of the instance called.
         update_form = updateForm(request.POST, instance=selected)
         if update_form.is_valid():            
             update_form.save() 
