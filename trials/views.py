@@ -1,8 +1,10 @@
+import csv, io
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1, updateForm
-from trials.models import cancerTypes, trial
+from trials.models import cancerTypes, trial, bodyRegion
 from django.db.models import Q
-
+from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -124,6 +126,7 @@ def user_login(request):
             return HttpResponse("Invalid Logn Details")
     else:
         return render(request, 'trials/login.html')
+
 # Read View
 def get_trial(request,id):
     '''
@@ -134,7 +137,7 @@ def get_trial(request,id):
     try:
         trialSelected = trial.objects.get(id=id)
     except:
-        return redirect('index') 
+        return redirect('trials:index') 
     
     
     
@@ -192,3 +195,36 @@ def trial_update(request, id):
     else:
         return redirect('index')
 
+@login_required
+def csv_upload(request):
+    template = "trials/trial_upload.html"
+    prompt = {
+        'order': 'Order of CSV should be name, description, end_date (YYYY-MM-DD), inclusion_criteria, exclusion_criteria, body_region, cancer_type, trial_lead'
+    }
+
+    if request.method == "POST":
+        csv_file = request.FILES['file']
+        # check the file is a CSV
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'This is not a csv File')
+        else:
+            data_set = csv_file.read().decode('UTF-8')
+            io_string = io.StringIO(data_set)
+            # skip first line as usually a header
+            next(io_string)
+            # print(f'the io_string: {io_string.read()}')            
+            for column in csv.reader(io_string, delimiter=',', quotechar='"'):
+                _, created = trial.objects.update_or_create(
+                    name=column[0],
+                    description=column[1],
+                    end_date=column[2], 
+                    inclusion_criteria=column[3], 
+                    exclusion_criteria=column[4], 
+                    body_region=bodyRegion.objects.get(body_region = column[5]), 
+                    cancer_type=cancerTypes.objects.get(cancer_type = column[6]), 
+                    trial_lead=User.objects.get(username = column[7]),                    
+                )
+        context = {}
+        return render(request,template, context)
+    else:
+        return render(request, template, prompt)
