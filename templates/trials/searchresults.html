@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 {% extends "trials/base.html" %}
-    {% block body_block%}      
-            
-       
-        {% for trialName in trials %}            
-            <li><a href= "{% url 'trials:id' id=trialName.id %}">{{ trialName.name }}</a> </li>
+    {% block body_block%}   
+    <table class="table">
+        <tr>
+            <th>Description</th>            
+            <th>End Date</th>
+        </tr>         
+        {% for trialName in trials %}        
+        <tr>
+            <td>
+                <a href= "{% url 'trials:id' id=trialName.id %}">{{ trialName.name }}</a>
+            </td>
+            <td>
+                {{ trialName.end_date }}
+            </td>
+        </tr>                                 
         {% empty %}
             <h2>No Trials meet that criteria</h2>
         {% endfor %}
-        
+    </table>
+    
+       
+               
 
     {% endblock %}

@@ -2,7 +2,7 @@ import csv, io
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1, updateForm
-from trials.models import cancerTypes, trial, bodyRegion
+from trials.models import cancerTypes, trial, bodyRegion, trial_lead
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -26,7 +26,7 @@ def index(request):
                 returned_trials = trial.objects.filter(
                     Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
                     Q(cancer_type__exact=search_form.cleaned_data["cancer_type"]) &
-                    Q(end_date__gt = now)).values()                      
+                    Q(end_date__gt = now)).values()                                    
                 return render(request,'trials/searchresults.html',
                                 {'trials':returned_trials
                                 })
@@ -139,8 +139,7 @@ def get_trial(request,id):
     except:
         return redirect('trials:index') 
     
-    
-    
+       
     if trialSelected is None:
     # no trial found 
         return render(request,"trials/error.html",{
@@ -157,10 +156,11 @@ def get_trial(request,id):
             'exclusion_criteria': trialSelected.exclusion_criteria,
             'body_region': trialSelected.body_region,
             'cancer_type': trialSelected.cancer_type,
-            'trial_lead': trialSelected.trial_lead
+            'trial_lead': trialSelected.trial_lead,
+            'email': trialSelected.trial_lead.email,
+            'contact': trialSelected.trial_lead.contact
         }
-        trial_form = selectedTrialForm(initial=data)
-        print("ID = {}", trialSelected.id)       
+        trial_form = selectedTrialForm(initial=data)           
     
         return render(request,"trials/trialpage.html",{                
                 "trial_form":trial_form,
@@ -222,7 +222,7 @@ def csv_upload(request):
                     exclusion_criteria=column[4], 
                     body_region=bodyRegion.objects.get(body_region = column[5]), 
                     cancer_type=cancerTypes.objects.get(cancer_type = column[6]), 
-                    trial_lead=User.objects.get(username = column[7]),                    
+                    trial_lead=trial_lead.objects.get(last_name = column[7]),                    
                 )
         context = {}
         return render(request,template, context)

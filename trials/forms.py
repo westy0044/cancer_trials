@@ -31,10 +31,12 @@ class updateForm(forms.ModelForm):
 
 
 class selectedTrialForm(forms.ModelForm):
+    email = forms.EmailField()
+    contact = forms.CharField()
     
     class Meta():
         model = trial
-        fields = '__all__'
+        exclude = ('Trial_ended',)
 
 class searchForm(forms.ModelForm):
 

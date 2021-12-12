@@ -30,6 +30,15 @@ class cancerTypes(models.Model):
     def __str__(self):
         return (f"{self.body_region} {self.cancer_type}")
 
+class trial_lead(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    contact = models.CharField(max_length=20)
+
+    def __str__(self):
+        return (f"{self.last_name}")
+
 class trial(models.Model):    
     name = models.TextField()
     description = models.TextField()
@@ -38,7 +47,7 @@ class trial(models.Model):
     exclusion_criteria = models.TextField()
     body_region = models.ForeignKey(bodyRegion, on_delete=models.CASCADE)
     cancer_type = models.ForeignKey(cancerTypes, on_delete=models.CASCADE)
-    trial_lead = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    
+    trial_lead = models.ForeignKey(trial_lead, on_delete=models.CASCADE, null=True)    
     Trial_ended = models.BooleanField(default=False)
 
     def __str__(self):
