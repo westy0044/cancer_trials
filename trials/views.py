@@ -148,6 +148,8 @@ def get_trial(request,id):
     else:        
     # trial found
     # issue with end date due to form how do we get drop down but over write when completed?
+    # to access trialSelected.trial_lead is foreign key other firld in foreign modle access by.field names
+    #e.g. trialSelected.trial_lead.email and trialSelected.trial_lead.contact below
         data = {
             'name': trialSelected.name,
             'description': trialSelected.description,
@@ -199,7 +201,7 @@ def trial_update(request, id):
 def csv_upload(request):
     template = "trials/trial_upload.html"
     prompt = {
-        'order': 'Order of CSV should be name, description, end_date (YYYY-MM-DD), inclusion_criteria, exclusion_criteria, body_region, cancer_type, trial_lead'
+        'order': 'Order of CSV should be name, description, end_date (YYYY-MM-DD), inclusion_criteria, exclusion_criteria, body_region, cancer_type, trial_lead, use "" to enclose fields containing commas'
     }
 
     if request.method == "POST":

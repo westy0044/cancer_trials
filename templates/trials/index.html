@@ -10,7 +10,7 @@
         <form action="{% url 'trials:index' %}" method="post" id="searchForm" data-cancerTypes-url="{% url 'trials:ajax_load_cancer_type' %}" >
             {% csrf_token %}
             {{ search_form.as_p}}
-            <input type="submit" name="" value="Search">     
+            <input type="submit" class="btn btn-primary btn-lg btn-block" name="" value="Search">     
         </form>
     </div>
 
