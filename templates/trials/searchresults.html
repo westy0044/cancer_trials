@@ -3,13 +3,17 @@
     {% block body_block%}   
     <table class="table">
         <tr>
-            <th>Description</th>            
+            <th>Description</th>  
+            <th>Description</th>          
             <th>End Date</th>
         </tr>         
         {% for trialName in trials %}        
         <tr>
             <td>
                 <a href= "{% url 'trials:id' id=trialName.id %}">{{ trialName.name }}</a>
+            </td>
+            <td>
+                {{ trialName.description }}
             </td>
             <td>
                 {{ trialName.end_date }}

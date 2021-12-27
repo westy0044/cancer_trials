@@ -25,15 +25,14 @@ def index(request):
                 now = datetime.datetime.now()
                 returned_trials = trial.objects.filter(
                     Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
-                    Q(cancer_type__exact=search_form.cleaned_data["cancer_type"]) &
+                    # Q(cancer_type__exact=search_form.cleaned_data["cancer_type"]) &
                     Q(end_date__gt = now)).values()                                    
                 return render(request,'trials/searchresults.html',
                                 {'trials':returned_trials
                                 })
             else:
                 returned_trials = trial.objects.filter(
-                    Q(body_region__exact=search_form.cleaned_data["body_region"]) & 
-                    Q(cancer_type__exact=search_form.cleaned_data["cancer_type"])).values()                      
+                    Q(body_region__exact=search_form.cleaned_data["body_region"]))                      
                 return render(request,'trials/searchresults.html',
                                 {'trials':returned_trials
                                 })

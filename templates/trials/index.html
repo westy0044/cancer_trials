@@ -9,7 +9,17 @@
     <div class="jumbotron">
         <form action="{% url 'trials:index' %}" method="post" id="searchForm" data-cancerTypes-url="{% url 'trials:ajax_load_cancer_type' %}" >
             {% csrf_token %}
-            {{ search_form.as_p}}
+            <!-- {{ search_form.as_p}} -->
+            <div class="form-group">
+              <label for="body_region">Body Region</label>
+              {{ search_form.body_region }}
+            </div>            
+            {% if user.is_authenticated %}
+            <div class="form-check">              
+              {{ search_form.Trial_ended }}
+              <label class="form-check-label" for="Trial_ended">Include Ended Trials </label>
+            </div>              
+            {% endif %}
             <input type="submit" class="btn btn-primary btn-lg btn-block" name="" value="Search">     
         </form>
     </div>
