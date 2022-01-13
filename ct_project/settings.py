@@ -22,7 +22,9 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bwhbkvn-07gf!c8oe4#tzprg!nj%+f6(4axkuq8)xl3*p2*tjf'
+
+with open(os.path.join(BASE_DIR, 'secretkey.txt')) as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

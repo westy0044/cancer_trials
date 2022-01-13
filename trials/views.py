@@ -213,7 +213,7 @@ def csv_upload(request):
             io_string = io.StringIO(data_set)
             # skip first line as usually a header
             next(io_string)
-            # print(f'the io_string: {io_string.read()}')            
+            print(f'the io_string: {io_string.read()}')            
             for column in csv.reader(io_string, delimiter=',', quotechar='"'):
                 _, created = trial.objects.update_or_create(
                     name=column[0],
