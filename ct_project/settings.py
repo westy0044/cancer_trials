@@ -16,9 +16,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # STATIC_DIR = os.path.join(BASE_DIR,'static')
-STATIC_DIR = os.environ['STATIC_DIR']
+# STATIC_DIR = os.environ['STATIC_DIR']
 # MEDIA_DIR = os.path.join(BASE_DIR,'media')
-MEDIA_DIR = os.environ['MEDIA_DIR']
+# MEDIA_DIR = os.environ['MEDIA_DIR']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.1','ct-project.azurewebsites.net']
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
     'phonenumber_field',
     'trials.apps.TrialsConfig',
     'django.contrib.admin',
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'storages',       
 ]
 
 MIDDLEWARE = [
@@ -80,21 +80,26 @@ WSGI_APPLICATION = 'ct_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DBNAME', ''),
-        'USER': os.environ.get('DBUSER', ''),
-        'PASSWORD': os.environ.get('DBPASS', ''),
-        'HOST': os.environ.get('DBHOST', ''),
-        'PORT': '5432',
+if 'DBPASS' in os.environ.keys():
+    # stagging or production database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('DBNAME', ''),
+            'USER': os.environ.get('DBUSER', ''),
+            'PASSWORD': os.environ.get('DBPASS', ''),
+            'HOST': os.environ.get('DBHOST', ''),
+            'PORT': '5432',
+        }
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-}
-
+else:
+    # development database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -140,15 +145,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+DEFAULT_FILE_STORAGE = 'ct_project.backend.AzureMediaStorage'
+STATICFILES_STORAGE  = 'ct_project.backend.AzureStaticStorage'
 
-STATICFILES_DIRS = [STATIC_DIR,]
+AZURE_STORAGE_KEY = os.environ.get('AZURE_STORAGE_KEY', False)
+AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME', False)
+AZURE_MEDIA_CONTAINER = os.environ.get('AZURE_MEDIA_CONTAINER', 'media')
+AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
 
+# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.azureedge.net'  # CDN URL
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'  # Files URL
+
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# any static paths you want to publish
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [STATIC_DIR,]
 
 #media
-
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = MEDIA_DIR
+# MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
