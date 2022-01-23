@@ -96,6 +96,7 @@ if 'DBPASS' in os.environ.keys():
             'PASSWORD': os.environ.get('DBPASS', ''),
             'HOST': os.environ.get('DBHOST', ''),
             'PORT': '5432',
+            'OPTIONS': {'sslmode': 'require'},
         }
     }
 else:
