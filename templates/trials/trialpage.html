@@ -5,14 +5,57 @@
 
     <div class="jumbotron">
         <!-- to do need to redirect to a view to save the update -->
-        <form action="{% url 'trials:update/id' id=trialSelected.id %}" id="updateForm" method="post">
-            <div class="form-group">
-                {% csrf_token %}
-                {{ trial_form}}
-            </div>            
-            {% if user.is_authenticated %}
-                <input type="submit" name="" value="trial_update">                  
-            {% endif %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'trials:update/id' id=trialSelected.id %}" id="updateForm" method="post">
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ trial_form}}
+                </div>            
+            <input type="submit" name="" value="trial_update">
+        {% else %}
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <td>{{ trialSelected.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ trialSelected.description }}</td>
+                </tr>
+                <tr>
+                    <th>Trial End Date</th>
+                    <td>{{ trialSelected.end_date }}</td>
+                </tr>
+                <tr>
+                    <th>Trial Inclusion Criteria</th>
+                    <td>{{ trialSelected.inclusion_criteria }}</td>
+                </tr>
+                <tr>
+                    <th>Trial Exclusion Criteria</th>
+                    <td>{{ trialSelected.exclusion_criteria }}</td>
+                </tr>
+                <tr>
+                    <th>Trial Exclusion Criteria</th>
+                    <td>{{ trialSelected.exclusion_criteria }}</td>
+                </tr>
+                <tr>
+                    <th>Cancer Type</th>
+                    <td>{{ trialSelected.cancer_type }}</td>
+                </tr>
+                <tr>
+                    <th>Trial Contact</th>
+                    <td>{{ trialSelected.trial_lead.first_name }} {{ trialSelected.trial_lead.last_name  }}</td>
+                </tr>
+                <tr>
+                    <th>Contact Email</th>
+                    <td>{{ trialSelected.trial_lead.email }}</td>
+                </tr>
+                <tr>
+                    <th>Contact Phone Number</th>
+                    <td>{{ trialSelected.trial_lead.contact }}</td>
+                </tr>
+            </table>                          
+        {% endif %}
              
     
         </form>
