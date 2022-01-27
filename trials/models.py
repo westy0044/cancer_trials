@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
-
+from django.urls import reverse
 
 # Create your models here.
 class UserProfileInfo(models.Model):
@@ -29,6 +29,9 @@ class cancerTypes(models.Model):
 
     def __str__(self):
         return (f"{self.body_region} {self.cancer_type}")
+
+    def get_absolute_url(self):
+        return reverse('trials:cancerTypes')
 
 class trial_lead(models.Model):
     first_name = models.CharField(max_length=200)

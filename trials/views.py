@@ -2,6 +2,7 @@ import csv, io
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from trials.forms import UserForm, UserProfileInfoForm, searchForm, trialForm, selectedTrialForm, searchForm1, updateForm
+from . import models
 from trials.models import cancerTypes, trial, bodyRegion, trial_lead
 from django.db.models import Q
 from django.contrib import messages
@@ -9,6 +10,10 @@ from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import (View,TemplateView,
+                                ListView,DetailView,
+                                CreateView,DeleteView,
+                                UpdateView)
 
 import datetime
 
@@ -229,3 +234,23 @@ def csv_upload(request):
         return render(request,template, context)
     else:
         return render(request, template, prompt)
+
+class cancerTypesListView(ListView):
+    # If you don't pass in this attribute,
+    # Django will auto create a context name
+    # for you with object_list!
+    # Default would be 'cancerTypes_list'
+    # in the absence of an explicit template Django will infer one from the object’s name_list.
+    # Example of making your own:
+    # context_object_name = 'cancerTypes'
+    context_object_name = 'cancerTypes_list'   
+    model = models.cancerTypes
+
+class cancerTypesDetailView(DetailView):
+    context_object_name = 'cancertype_details'
+    model = models.cancerTypes
+    template_name = 'trial/cancertype_detail.html'
+
+class cancerTypesCreateView(CreateView):
+    fields = ("body_region","cancer_type")
+    model = models.cancerTypes

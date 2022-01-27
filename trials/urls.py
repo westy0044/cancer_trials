@@ -13,5 +13,7 @@ urlpatterns = [
     path('addTrial/', views.addtrial, name='addtrial'),    
     path('logout/', views.user_logout, name='logout'),
     path('ajax/load_cancers/', views.load_cancer_type, name='ajax_load_cancer_type'),
-            
+    path('cancerTypes/', views.cancerTypesListView.as_view(), name='cancerTypes'),
+    path('cancerTypes/<str:id>', views.cancerTypesDetailView.as_view(), name='cancerTypes/id'),
+    path('newTypes/', views.cancerTypesCreateView.as_view(), name='newType'),            
 ]

@@ -16,8 +16,9 @@
 
           {% if user.is_authenticated %}
           <li><a class="navbar-link" href="{% url 'trials:addtrial' %}">Add New Trial</a></li>
-          <li><a class="navbar-link" href="{% url 'trials:register' %}">Add New Trial Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'trials:csv_upload' %}">Upload CSV</a></li>          
+          <li><a class="navbar-link" href="{% url 'trials:register' %}">Add</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:cancerTypes' %}">Cancer Types</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:newType' %}">Add New Cancer Types</a></li>          
           <li><a class="navbar-link" href="{% url 'trials:logout' %}">Logout</a></li>
           {% else %}
           <li><a class="navbar-link" href="{% url 'trials:user_login' %}">Trial Admins</a></li>

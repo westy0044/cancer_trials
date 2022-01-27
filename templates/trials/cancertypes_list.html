@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block %}
+
+        {% for cancer in cancerTypes_list %}
+            <h2><li>{{cancer.body_region}} - <a href="{{cancer.id}}/">{{cancer.cancer_type}} </a></li></h2>
+        {% endfor %}
+
+    {% endblock %}
