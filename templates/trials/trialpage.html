@@ -13,11 +13,10 @@
                 </div>            
             <input type="submit" name="" value="trial_update">
         {% else %}
+            <figure class="text-center">
+                <H3  class="display-3"><u>{{ trialSelected.name }}</u></H3>
+            </figure>
             <table class="table table-bordered">
-                <tr>
-                    <th>Name</th>
-                    <td>{{ trialSelected.name }}</td>
-                </tr>
                 <tr>
                     <th>Description</th>
                     <td>{{ trialSelected.description }}</td>
