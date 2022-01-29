@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block %}
+        <h1>Delete {{cancertype.body_region}} - {{cancertype.cancer_type}}?</h1>
+
+            <form method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'trials:cancerTypes' %} ">Cancel</a>
+
+            </form>
+    {% endblock %}

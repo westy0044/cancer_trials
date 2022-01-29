@@ -14,6 +14,8 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('ajax/load_cancers/', views.load_cancer_type, name='ajax_load_cancer_type'),
     path('cancerTypes/', views.cancerTypesListView.as_view(), name='cancerTypes'),
-    path('cancerTypes/<str:id>', views.cancerTypesDetailView.as_view(), name='cancerTypes/id'),
+    path('cancerTypes/<int:pk>', views.cancerTypesDetailView.as_view(), name="cancerTypesDetails"),
+    path('cancerTypes/update/<int:pk>', views.cancerTypesUpdateView.as_view(), name="cancerTypesUpdate"),
+    path('cancerTypes/delete/<int:pk>', views.cancerTypesDeleteView.as_view(), name="cancerTypesDelete"),
     path('newTypes/', views.cancerTypesCreateView.as_view(), name='newType'),            
 ]

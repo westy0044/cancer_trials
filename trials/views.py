@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (View,TemplateView,
                                 ListView,DetailView,
@@ -249,8 +249,18 @@ class cancerTypesListView(ListView):
 class cancerTypesDetailView(DetailView):
     context_object_name = 'cancertype_details'
     model = models.cancerTypes
-    template_name = 'trial/cancertype_detail.html'
+    template_name = 'trials/cancertype_detail.html'
 
 class cancerTypesCreateView(CreateView):
     fields = ("body_region","cancer_type")
     model = models.cancerTypes
+
+class cancerTypesUpdateView(UpdateView):
+    fields = ("body_region","cancer_type")
+    model = models.cancerTypes
+
+class cancerTypesDeleteView(DeleteView):
+    context_object_name = 'cancertype'    
+    model = models.cancerTypes
+    success_url = reverse_lazy("trials:cancerTypes")
+    

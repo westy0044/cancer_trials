@@ -2,13 +2,12 @@
 {% extends "trials/base.html" %}
     {% block body_block %}
     <div class="jumbotron">
-        <p>Id_num: {{cancertype_details.id}}</p>
+        <p>Id: {{cancertype_details.id}}</p>
         <p>Body Area: {{cancertype_details.body_region}}</p>
         <p>Cancer Type: {{cancertype_details.cancer_type}}</p>            
       </div>
       <div class="container">
-        <p><a class='btn btn-warning' href="">Update</a></p>
-    
+        <p><a class='btn btn-warning' href="{% url 'trials:cancerTypesUpdate' pk=cancertype_details.id %}">Update</a>  <a class='btn btn-warning' href="{% url 'trials:cancerTypesDelete' pk=cancertype_details.id %}">Delete</a></p>    
       </div>
 
     {% endblock %}
