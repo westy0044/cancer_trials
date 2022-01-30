@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block %}
+        <h1>Delete {{trial_lead.first_name}} - {{trial_lead.last_name}}?</h1>
+
+            <form method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'trials:trial_lead' %} ">Cancel</a>
+
+            </form>
+    {% endblock %}

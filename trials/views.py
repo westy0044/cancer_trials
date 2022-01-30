@@ -263,4 +263,25 @@ class cancerTypesDeleteView(DeleteView):
     context_object_name = 'cancertype'    
     model = models.cancerTypes
     success_url = reverse_lazy("trials:cancerTypes")
-    
+
+class trial_leadListView(ListView):
+    context_object_name = 'trial_lead_list'   
+    model = models.trial_lead
+
+class trial_leadDetailView(DetailView):
+    context_object_name = 'trial_lead_details'
+    model = models.trial_lead
+    template_name = 'trials/trial_lead_detail.html'
+
+class trial_leadCreateView(CreateView):
+    fields = ("first_name","last_name","email","contact")
+    model = models.trial_lead
+
+class trial_leadUpdateView(UpdateView):
+    fields = ("first_name","last_name","email","contact")
+    model = models.trial_lead
+
+class trial_leadDeleteView(DeleteView):
+    context_object_name = 'trial_lead'    
+    model = models.trial_lead
+    success_url = reverse_lazy("trials:trial_lead")

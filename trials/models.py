@@ -42,6 +42,9 @@ class trial_lead(models.Model):
     def __str__(self):
         return (f"{self.last_name}")
 
+    def get_absolute_url(self):
+        return reverse('trials:trial_lead')
+
 class trial(models.Model):    
     name = models.TextField()
     description = models.TextField()

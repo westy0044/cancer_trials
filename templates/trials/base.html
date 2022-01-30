@@ -16,11 +16,11 @@
 
           {% if user.is_authenticated %}
           <li><a class="navbar-link" href="{% url 'trials:addtrial' %}">New Trial</a></li>
-          <li><a class="navbar-link" href="{% url 'trials:register' %}">Trial</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:trial_lead' %}">Trial Leads</a></li>
           <li><a class="navbar-link" href="{% url 'trials:cancerTypes' %}">Cancer Types</a></li>                   
           <li><a class="navbar-link" href="{% url 'trials:logout' %}">Logout</a></li>
           {% else %}
-          <li><a class="navbar-link" href="{% url 'trials:user_login' %}">Trial Admins</a></li>
+          <li><a class="navbar-link" href="{% url 'trials:user_login' %}">Trial Administration</a></li>
           {% endif %}
         </ul>
       </div>

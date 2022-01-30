@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block %}
+    <div class="container">
+        <p><a class='btn btn-warning' href="{% url 'trials:newlead' %}">Add New Trial Lead</a></p>    
+    </div>
+
+        {% for lead in trial_lead_list %}
+            <h2><li>{{lead.first_name}} - <a href="{{lead.id}}">{{lead.last_name}} </a></li></h2>
+        {% endfor %}
+
+    {% endblock %}

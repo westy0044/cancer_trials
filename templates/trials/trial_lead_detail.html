@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends "trials/base.html" %}
+    {% block body_block %}
+    <div class="jumbotron">
+        <p>Id: {{trial_lead_details.id}}</p>
+        <p>First Name: {{trial_lead_details.first_name}}</p>
+        <p>Surname: {{trial_lead_details.last_name}}</p>
+        <p>Email Address: {{trial_lead_details.email}}</p>
+        <p>Telephone Number: {{trial_lead_details.contact}}</p>            
+      </div>
+      <div class="container">
+        <p><a class='btn btn-warning' href="{% url 'trials:trial_leadUpdate' pk=trial_lead_details.id %}">Update</a>  <a class='btn btn-warning' href="{% url 'trials:trial_leadDelete' pk=trial_lead_details.id %}">Delete</a></p>    
+      </div>
+
+    {% endblock %}
