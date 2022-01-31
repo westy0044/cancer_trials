@@ -1,3 +1,5 @@
+from tkinter import Widget
+from xml.dom.minidom import Attr
 from django import forms
 from django.contrib.auth.models import User
 from .models import UserProfileInfo, trial, cancerTypes
@@ -22,6 +24,11 @@ class trialForm(forms.ModelForm):
     class Meta():
         model = trial
         fields = '__all__'
+       
+        widgets = {            
+            'name': forms.Textarea(attrs={'class': 'form-control'}),
+            'description' : forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
 class updateForm(forms.ModelForm):
 

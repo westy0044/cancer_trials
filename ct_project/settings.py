@@ -188,3 +188,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/trials/user_login'
+
+if ENVIRONMENT == 'production':
+    DEBUG = False    
+    SESSION_COOKIE_SECURE = True
+    
