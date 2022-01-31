@@ -1,4 +1,3 @@
-from tkinter import Widget
 from xml.dom.minidom import Attr
 from django import forms
 from django.contrib.auth.models import User
