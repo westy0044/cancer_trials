@@ -191,5 +191,4 @@ LOGIN_URL = '/trials/user_login'
 
 if ENVIRONMENT == 'production':
     DEBUG = False    
-    SESSION_COOKIE_SECURE = True
     
